@@ -42,3 +42,16 @@ After removing async:
 app.post('/login',(req,res)=>{
 })
 ```
+##  Missing res.status(200) in successful login response
+Explicitly set res.status(200) before returning a successful response.
+```js
+ res.status(200).json({
+            token,
+            user: {
+                id: user.id,
+                name: user.name,
+                email: user.email,
+                password: user.password.substring(0, 3)
+            }
+        });
+```
