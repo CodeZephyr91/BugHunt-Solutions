@@ -42,9 +42,13 @@ const api = {
 
     async getUserData() {
         try {
+            const token=getToken();
+            if(!token){
+                throw new Error("Unauthorized: No token found");
+            }
             const response = await fetch(`${API_URL}/user`, {
                 headers: {
-                    'Authorization': `Bearer ${getToken()}`,
+                    'Authorization': `Bearer ${token}`,
                 },
             });
             const data = await response.json();
@@ -57,9 +61,13 @@ const api = {
 
     async getApiData() {
         try {
+            const token=getToken();
+            if(!token){
+                throw new Error("Unauthorized: No token found");
+            }
             const response = await fetch(`${API_URL}/data`, {
                 headers: {
-                    'Authorization': `Bearer ${getToken()}`,
+                    'Authorization': `Bearer ${token}`,
                 },
             });
             const data = await response.json();
@@ -72,9 +80,13 @@ const api = {
 
     async getTasks() {
         try {
+            const token=getToken();
+            if(!token){
+                throw new Error("Unauthorized: No token found");
+            }
             const response = await fetch(`${API_URL}/tasks`, {
                 headers: {
-                    'Authorization': `Bearer ${getToken()}`,
+                    'Authorization': `Bearer ${token}`,
                 },
             });
             const data = await response.json();
@@ -87,11 +99,15 @@ const api = {
 
     async addTask(title) {
         try {
+            const token=getToken();
+            if(!token){
+                throw new Error("Unauthorized: No token found");
+            }
             const response = await fetch(`${API_URL}/tasks`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${getToken()}`,
+                    'Authorization': `Bearer ${token}`,
                 },
                 body: JSON.stringify({ title }),
             });
@@ -105,11 +121,15 @@ const api = {
 
     async updateTask(id, updates) {
         try {
+            const token=getToken();
+            if(!token){
+                throw new Error("Unauthorized: No token found");
+            }
             const response = await fetch(`${API_URL}/tasks/${id}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${getToken()}`,
+                    'Authorization': `Bearer ${token}`,
                 },
                 body: JSON.stringify(updates),
             });
@@ -123,10 +143,14 @@ const api = {
 
     async deleteTask(id) {
         try {
+            const token=getToken();
+            if(!token){
+                throw new Error("Unauthorized: No token found");
+            }
             const response = await fetch(`${API_URL}/tasks/${id}`, {
                 method: 'DELETE',
                 headers: {
-                    'Authorization': `Bearer ${getToken()}`,
+                    'Authorization': `Bearer ${token}`,
                 },
             });
             if (!response.ok) throw new Error('Error deleting task');
