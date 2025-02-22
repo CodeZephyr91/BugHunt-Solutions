@@ -17,3 +17,8 @@ Fix:
 ```js
 const cors=require('cors');
 ```
+##### 4.app not declared in the code
+Fix:
+```js
+const app=express();
+```
