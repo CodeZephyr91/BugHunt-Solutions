@@ -12,3 +12,8 @@ Fix:
 ```js
 require('dotenv').config();
 ```
+##### 3. 3.Incorrect declaration of cors using var
+Fix:
+```js
+const cors=require('cors');
+```
