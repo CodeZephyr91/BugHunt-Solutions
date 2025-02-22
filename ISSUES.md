@@ -47,6 +47,7 @@ In case usertasks for a given user is empty an appropraite response error messag
 Explicit status of 200 OK must be sent for successful response
 
 ## 12. In the put request route '/tasks/:id', check for valid taskID missing
-In case the taskID is not valid or is NaN it cannot be parsed to an integer
+In case the taskID is not valid or is NaN it cannot be parsed to an integer.It may also be parsed to a value invalid for being an apt task ID.
 
-
+## 13. Valid id check missing in the delete request route for '/tasks/:id' 
+In case the taskID is not valid or is NaN it cannot be parsed into an integer. It may also be parsed to a value invalid for being an apt task ID.
