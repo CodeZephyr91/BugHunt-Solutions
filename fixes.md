@@ -29,3 +29,10 @@ Removed async from
 ```js
 app.post('/register',async(req,res))
 ```
+## Incorrect status code for "User not found" in '/login' route
+Appropriate fix for status code 404:
+ ```js
+ if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+```
