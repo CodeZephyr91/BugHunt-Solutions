@@ -147,6 +147,9 @@ app.get('/tasks', authenticateToken, (req, res) => {
 
 app.put('/tasks/:id', authenticateToken, (req, res) => {
     const { id } = req.params;
+    if(isNaN(id)|| parseInt(id)<=0){
+        return res.status(400).json({message:"Invalid ID for task"})
+    }
     const { title, completed } = req.body;
     const task = tasks.find(task => task.id === parseInt(id) && task.userId === req.user.id);
     if (!task) {

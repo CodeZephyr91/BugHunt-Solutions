@@ -111,3 +111,23 @@ app.get('/tasks', authenticateToken, (req, res) => {
     }
     res.status(200).json(userTasks);
 });
+```
+## 12. In the put request route '/tasks/:id', check for valid taskID missing
+In case the id is invalid or NaN it cannot be parsed into an integer
+Updated code:
+```js
+app.put('/tasks/:id', authenticateToken, (req, res) => {
+    const { id } = req.params;
+    if(isNaN(id)|| parseInt(id)<=0){
+        return res.status(400).json({message:"Invalid ID for task"})
+    }
+    const { title, completed } = req.body;
+    const task = tasks.find(task => task.id === parseInt(id) && task.userId === req.user.id);
+    if (!task) {
+        return res.status(404).json({ message: 'Task not found' });
+    }
+    task.title = title !== undefined ? title : task.title;
+    task.completed = completed !== undefined ? completed : task.completed;
+    res.json(task);
+});
+```
