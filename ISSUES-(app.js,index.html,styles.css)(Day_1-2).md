@@ -10,3 +10,5 @@ The **API_URL** is hardcoded as **http://localhost:3000**, which will break in p
 ## 3.Not clearing the token on logout
 The token is removed without removing the stored user details(user name and email)
 
+## 4.Fetching data despite a missing token
+If **getToken()** returns null, the request will still be sent with an invalid Authorization header

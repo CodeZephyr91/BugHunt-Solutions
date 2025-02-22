@@ -31,5 +31,12 @@ const handleLogout = (e) => {
     showAuth();
 };
 ```
-
+## 4.Fetching data despite a missing token
+Check for token existence before making API requests:
+```js
+const token = getToken();
+if (!token) {
+    throw new Error("Unauthorized: No token found");
+}
+```
 
