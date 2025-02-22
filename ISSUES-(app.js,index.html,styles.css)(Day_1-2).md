@@ -15,3 +15,6 @@ If **getToken()** returns null, the request will still be sent with an invalid A
 
 ## 5.Login error not resetting
 If a user fails to log in multiple times, the previous error message remains visible
+
+## 6.Incorrect task updation in handleTaskToggle as API call may fail
+The task state is updated in UI first, but if the API call fails, it does not revert
