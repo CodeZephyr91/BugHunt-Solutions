@@ -78,7 +78,7 @@ Fix for the code:
 app.post('/tasks', authenticateToken, (req, res) => {
     const { title } = req.body;
     if(!title||title.trim===''){
-        return res.status(400).json({"message":"Title is required"})
+        return res.status(400).json({message:"Title is required"})
     }
     const task = {
         id: tasks.length + 1,
@@ -88,5 +88,16 @@ app.post('/tasks', authenticateToken, (req, res) => {
     };
     tasks.push(task);
     res.status(201).json(task);
+});
+```
+## 10. Check for missing Tasks for a given user in '/tasks' route
+Fixes for the code:
+```js
+app.get('/tasks', authenticateToken, (req, res) => {
+    const userTasks = tasks.filter(task => task.userId === req.user.id);
+    if(userTasks.length === 0){
+        return res.status(404).json({message:"No valid tasks assigned to the user"});
+    }
+    res.json(userTasks);
 });
 ```

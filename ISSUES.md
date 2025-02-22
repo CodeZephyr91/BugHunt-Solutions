@@ -40,3 +40,5 @@ As per standard practice, for successful response, status 200 OK ought to be sen
 ## 9.Missing Title Validation in `/tasks` Route
 If a valid title is not there in the req body, then a status of 400 must be returned along with an appropriate message
 
+## 10. Check for missing Tasks for a given user in '/tasks' route
+In case usertasks for a given user is empty an appropraite response error message along with status 404 must be returned
