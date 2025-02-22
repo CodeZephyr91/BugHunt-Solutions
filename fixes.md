@@ -64,3 +64,11 @@ optimized to:
 ```js
 const token =authHeader?.split(' ')[1];
 ```
+##  Missing Explicit Status Code in '/user' Route
+```js
+ res.status(200).json({
+        id: user.id,
+        name: user.name,
+        email: user.email
+    });
+```
