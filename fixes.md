@@ -92,13 +92,7 @@ Appropriate fix for status code 404:
             return res.status(404).json({ message: 'User not found' });
         }
 ```
-## 6.Redundant and unecessary async in '/login' route
-After removing async:
-```js
-app.post('/login',(req,res)=>{
-})
-```
-## 7. Missing res.status(200) in successful login response
+## 6. Missing res.status(200) in successful login response
 Explicitly set res.status(200) before returning a successful response.
 ```js
  res.status(200).json({
@@ -112,7 +106,7 @@ Explicitly set res.status(200) before returning a successful response.
         });
 ```
 
-## 8.Optimization via chaining for authHeader splitting in authentication middleware
+## 7.Optimization via chaining for authHeader splitting in authentication middleware
 ```js
 const token = authHeader && authHeader.split(' ')[1];
 ```
@@ -120,7 +114,7 @@ optimized to:
 ```js
 const token =authHeader?.split(' ')[1];
 ```
-##  Missing Explicit Status Code in '/user' Route
+## 8.Missing Explicit Status Code in '/user' Route
 ```js
  res.status(200).json({
         id: user.id,
