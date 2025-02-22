@@ -164,3 +164,7 @@ app.delete('/tasks/:id', authenticateToken, (req, res) => {
     tasks.splice(taskIndex, 1);
     res.status(204).send();
 });
+app.get('/',(req,res)=>{
+    console.log(`Connected to the API`)
+    res.send("Connection to API successful")
+})
