@@ -24,3 +24,8 @@ Include .env in .gitignore
 ```bash
 echo ".env" >> .gitignore
 ```
+## Redundant and misleading use of async in '/register' route when all functions inside are synchronous
+Removed async from 
+```js
+app.post('/register',async(req,res))
+```
