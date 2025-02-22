@@ -46,3 +46,7 @@ In case usertasks for a given user is empty an appropraite response error messag
 ## 11. Explicit status for successful response in '/tasks' route
 Explicit status of 200 OK must be sent for successful response
 
+## 12. In the put request route '/tasks/:id', check for valid taskID missing
+In case the taskID is not valid or is NaN it cannot be parsed to an integer
+
+
