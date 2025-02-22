@@ -78,7 +78,7 @@ Fix for the code:
 app.post('/tasks', authenticateToken, (req, res) => {
     const { title } = req.body;
     if(!title||title.trim===''){
-        res.status(400).json({"message":"Title is required"})
+        return res.status(400).json({"message":"Title is required"})
     }
     const task = {
         id: tasks.length + 1,
