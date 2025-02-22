@@ -6,10 +6,8 @@ const JWT_SECRET=process.env.JWT_secret_key
 const PORT=process.env.PORT
 const app = express();
 const users = [];
-
 app.use(cors());
 app.use(express.json());
-
 const authenticateToken = (req, res, next) => {
     const authHeader = req.headers['authorization'];
     const token = authHeader && authHeader.split(' ')[1];
