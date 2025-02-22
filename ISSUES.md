@@ -51,5 +51,6 @@ In case the taskID is not valid or is NaN it cannot be parsed into an integer. I
 Currently the server uses arrays to store the data of users and tasks however all data is lost when the server restarts thus causing lack of consistency. A database like MongoDB must be used to maintain persistent data in a secure manner.
 
 ## 15.Better Password Policy
-Using a library like validator is a much better practice which can check for a strong and weak password
+Instead of allowing weak passwords, a library like validator.js should be used to enforce a strong password policy (e.g., requiring uppercase letters, special characters, and minimum length).
+
 
