@@ -12,3 +12,6 @@ The token is removed without removing the stored user details(user name and emai
 
 ## 4.Fetching data despite a missing token
 If **getToken()** returns null, the request will still be sent with an invalid Authorization header
+
+## 5.Login error not resetting
+If a user fails to log in multiple times, the previous error message remains visible
