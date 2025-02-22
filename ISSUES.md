@@ -49,3 +49,7 @@ In case the taskID is not valid or is NaN it cannot be parsed into an integer. I
 
 ## 14. MongoDB Connection not implemented
 Currently the server uses arrays to store the data of users and tasks however all data is lost when the server restarts thus causing lack of consistency. A database like MongoDB must be used to maintain persistent data in a secure manner.
+
+## 15.Better Password Policy
+Using library like validator is a much better process which can check for a strong and weak password
+

@@ -234,3 +234,14 @@ const User = mongoose.model('User', userSchema);
 const Task = mongoose.model('Task', taskSchema);
 ```
 ### Modify the authentication and task routes to use MongoDB
+
+## 15.Better Password Policy
+```bash
+npm install validator
+```
+```js
+const validator = require('validator');
+if (!validator.isStrongPassword(password)) {
+    return res.status(400).json({ message: 'Weak password' });
+}
+```
