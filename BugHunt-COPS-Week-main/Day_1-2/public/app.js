@@ -214,7 +214,9 @@ const handleRegister = async (e) => {
             sessionStorage.setItem('credentials', JSON.stringify({email, password}));
             showDashboard(user);
         } catch (error) {
-            elements.registerError.textContent = error.message;
+            elements.loginError.textContent = '';
+            elements.loginError.textContent = error.message;
+
         }
     }
 };

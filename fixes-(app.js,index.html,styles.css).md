@@ -39,4 +39,13 @@ if (!token) {
     throw new Error("Unauthorized: No token found");
 }
 ```
+## 5.Login error not resetting
+If a user fails to log in multiple times, the previous error message remains visible
+Resetting error message before setting new one:
+```js
+elements.loginError.textContent = '';
+elements.loginError.textContent = error.message;
+```
+
+
 
