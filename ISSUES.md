@@ -13,26 +13,30 @@ Description:
 - `jwt.sign(payload, secret)` is **synchronous** (without a callback).
 - Using `async` here is **redundant** and **misleading**.
 
-## Incorrect status code for "User not found" in '/login' route
+## 4.Incorrect status code for "User not found" in '/login' route
 Description:
 - In the `/login` route, when a user is not found, the response status is set to `400 Bad Request` instead of `404 Not Found`.
 - `400` is used for client-side errors like invalid input, but `404` is more appropriate for missing resources.
 
-## Redundant and unecessary async in '/login' route
+## 5.Redundant and unecessary async in '/login' route
 Description:
 The app.post('/login', async (req, res) => {...}) function is marked as async, but no asynchronous operations (such as await) are used inside it.
 This makes the async keyword unnecessary and redundant.
 
-##  Missing res.status(200) in successful login response
+## 6.Missing res.status(200) in successful login response
 Description:
 As a standard practice, the response must be returned with an apt status code, for successful login, it must be 200 OK.
 
-## Optimization via chaining for authHeader splitting in authentication middleware
+## 7.Optimization via chaining for authHeader splitting in authentication middleware
 Instead of writing 
 ```js
 const token=authHeader && authHeader.split(' ')[1]
 ```
 we can optimize this by chaining
 
-##  Missing Explicit Status Code in '/user' Route
+## 8.Missing Explicit Status Code in '/user' Route
 As per standard practice, for successful response, status 200 OK ought to be sent
+
+## 9.Missing Title Validation in `/tasks` Route
+If a valid title is not there in the req body, then a status of 400 must be returned along with an appropriate message
+
