@@ -55,3 +55,14 @@ Explicitly set res.status(200) before returning a successful response.
             }
         });
 ```
+## Incorrect status code for "Invalid Token" in authenticateToken middleware
+403 status code modified to 401 status code aptly:
+```js
+ jwt.verify(token, JWT_SECRET, (err, user) => {
+        if (err) {
+            return res.status(401).json({ message: 'Invalid token' });
+        }
+        req.user = user;
+        next();
+    });
+```
