@@ -8,10 +8,10 @@ The server does not have any route handler for '/'
 Description: Secret keys, client id, mongodb uri, port no. etc must not be hardcoded in order to prevent security risks
 
 ## 3.Storing plain text password in '/register' route
-Instead of storing user password in plain text, they must be stored securely via hashing
+Instead of storing user password in plain text, they must be stored securely via hashing using bcrypt
 
-## 4.Storing plain text password in '/register' route
-Instead of storing user password in plain text, they must be stored securely via hashing
+## 4.Storing plain text password in '/login' route
+Instead of storing user password in plain text, they must be stored securely via hashing using bcrypt
 
 ## 5.Incorrect status code for "User not found" in '/login' route
 Description:
