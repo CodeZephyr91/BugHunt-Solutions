@@ -47,5 +47,5 @@ In case the taskID is not valid or is NaN it cannot be parsed to an integer.It m
 ## 13. Valid id check missing in the delete request route for '/tasks/:id' 
 In case the taskID is not valid or is NaN it cannot be parsed into an integer. It may also be parsed to a value invalid for being an apt task ID.
 
-## MongoDB Connection not implemented
+## 14. MongoDB Connection not implemented
 Currently the server uses arrays to store the data of users and tasks however all data is lost when the server restarts thus causing lack of consistency. A database like MongoDB must be used to maintain persistent data in a secure manner.
