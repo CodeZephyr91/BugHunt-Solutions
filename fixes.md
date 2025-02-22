@@ -36,3 +36,9 @@ Appropriate fix for status code 404:
             return res.status(404).json({ message: 'User not found' });
         }
 ```
+## Redundant and unecessary async in '/login' route
+After removing async:
+```js
+app.post('/login',(req,res)=>{
+})
+```
