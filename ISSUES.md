@@ -26,3 +26,7 @@ This makes the async keyword unnecessary and redundant.
 ##  Missing res.status(200) in successful login response
 Description:
 As a standard practice, the response must be returned with an apt status code, for successful login, it must be 200 OK.
+
+## Incorrect status code for "Invalid Token" in authenticateToken middleware
+Description:
+The status code mentioned for invalid token is 403 signifying forbidden or lack of permission. 401 unauthorized indicates authentication failure.
