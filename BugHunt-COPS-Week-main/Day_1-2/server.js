@@ -58,12 +58,12 @@ app.post('/register',(req, res) => {
     }
 });
 
-app.post('/login', async (req, res) => {
+app.post('/login',(req, res) => {
     try {
         const { email, password } = req.body;
         const user = users.find(u => u.email === email);
         if (!user) {
-            return res.status(400).json({ message: 'User not found' });
+            return res.status(404).json({ message: 'User not found' });
         }
 
         const validPassword = (password === user.password);
@@ -77,7 +77,7 @@ app.post('/login', async (req, res) => {
             password: user.password
         }, JWT_SECRET);
 
-        res.json({
+        res.status(200).json({
             token,
             user: {
                 id: user.id,
