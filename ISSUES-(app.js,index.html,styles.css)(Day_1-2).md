@@ -8,4 +8,5 @@ Storing passwords in local Storage is a security risk as local storage is easily
 The **API_URL** is hardcoded as **http://localhost:3000**, which will break in production.
 
 ## 3.Not clearing the token on logout
-The token is removed without removing the stored user details
+The token is removed without removing the stored user details(user name and email)
+

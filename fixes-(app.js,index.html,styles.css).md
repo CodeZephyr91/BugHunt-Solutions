@@ -21,20 +21,15 @@ const CONFIG={
 ```js
 const API_URL = CONFIG.API_URL;
 ```
-##  3. Unhandled Errors in API requests
-Parsing the response after confirming it is OK and indeed can be parsed into JSON
-Example:
+##  3.Not clearing the token on logout
 ```js
-async getUserData() {
-    try {
-        const response = await fetch(`${API_URL}/user`, {
-            headers: { 'Authorization': `Bearer ${getToken()}` },
-        });
-        if (!response.ok) throw new Error('Failed to fetch user data');
-        return await response.json();
-    } catch (error) {
-        throw new Error(error.message);
-    }
-}
+const handleLogout = (e) => {
+    e.preventDefault();
+    removeToken();
+    localStorage.removeItem('user_email');
+    localStorage.removeItem('user_password');
+    showAuth();
+};
 ```
+
 
