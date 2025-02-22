@@ -97,7 +97,7 @@ app.get('/user', authenticateToken, (req, res) => {
         return res.status(404).json({ message: 'User not found' });
     }
 
-    res.json({
+    res.status(200).json({
         id: user.id,
         name: user.name,
         email: user.email
