@@ -7,7 +7,13 @@ The server does not have any route handler for '/'
 Description: Secret keys, client id, mongodb uri, port no. etc must not be hardcoded in order to prevent security risks
 
 ## 3.Unnecessary async in "/register" route:
+Description:
 - The function does not use **await** anywhere.
 - `users.find(u => u.email === email)` is **synchronous**.
 - `jwt.sign(payload, secret)` is **synchronous** (without a callback).
 - Using `async` here is **redundant** and **misleading**.
+
+## Incorrect status code for "User not found" in '/login' route
+Description:
+- In the `/login` route, when a user is not found, the response status is set to `400 Bad Request` instead of `404 Not Found`.
+- `400` is used for client-side errors like invalid input, but `404` is more appropriate for missing resources.
