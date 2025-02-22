@@ -17,3 +17,8 @@ Description:
 Description:
 - In the `/login` route, when a user is not found, the response status is set to `400 Bad Request` instead of `404 Not Found`.
 - `400` is used for client-side errors like invalid input, but `404` is more appropriate for missing resources.
+
+## Redundant and unecessary async in '/login' route
+Description:
+The app.post('/login', async (req, res) => {...}) function is marked as async, but no asynchronous operations (such as await) are used inside it.
+This makes the async keyword unnecessary and redundant.
