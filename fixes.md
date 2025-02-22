@@ -66,3 +66,13 @@ Explicitly set res.status(200) before returning a successful response.
         next();
     });
 ```
+## Potential error with splitting Authorization Header
+if authHeader is malformed, not in the expected JWT format Bearer <TOKEN>, then 
+```js
+authHeader.split(' ')[1];
+```
+may cause runtime error if authHeader is undefined and split is applied to it
+The updated code:
+```js
+const token = authHeader && authHeader?.split(' ')[1];
+```

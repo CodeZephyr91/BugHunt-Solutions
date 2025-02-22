@@ -36,4 +36,4 @@ if authHeader is malformed,
 ```js
 authHeader.split(' ')[1]
 ```
-may return undefined which can cause runtime errors.
+may cause runtime error if authHeader is undefined and split is applied to it
