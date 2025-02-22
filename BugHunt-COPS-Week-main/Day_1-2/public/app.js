@@ -191,6 +191,7 @@ const handleLogin = async (e) => {
         setToken(token);
         showDashboard(user);
     } catch (error) {
+        elements.loginError.textContent = '';
         elements.loginError.textContent = error.message;
     }
 };
