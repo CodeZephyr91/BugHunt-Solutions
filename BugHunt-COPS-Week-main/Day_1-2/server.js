@@ -116,7 +116,6 @@ app.get('/data', authenticateToken, (req, res) => {
         ]
     });
 });
-
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
 });
@@ -125,6 +124,9 @@ const tasks = [];
 
 app.post('/tasks', authenticateToken, (req, res) => {
     const { title } = req.body;
+    if(!title||title.trim===''){
+        res.status(400).json({"message":"Title is required"})
+    }
     const task = {
         id: tasks.length + 1,
         title,
