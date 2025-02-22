@@ -36,7 +36,7 @@ As per standard practice, for successful response, status 200 OK ought to be sen
 If a valid title is not there in the req body, then a status of 400 must be returned along with an appropriate message
 
 ## 10. Check for missing Tasks for a given user in '/tasks' route
-In case usertasks for a given user is empty an appropraite response error message along with status 404 must be returned
+In case usertasks for a given user is empty an appropriate response error message along with status 404 must be returned
 
 ## 11. Explicit status for successful response in '/tasks' route
 Explicit status of 200 OK must be sent for successful response
@@ -51,5 +51,5 @@ In case the taskID is not valid or is NaN it cannot be parsed into an integer. I
 Currently the server uses arrays to store the data of users and tasks however all data is lost when the server restarts thus causing lack of consistency. A database like MongoDB must be used to maintain persistent data in a secure manner.
 
 ## 15.Better Password Policy
-Using library like validator is a much better process which can check for a strong and weak password
+Using a library like validator is a much better practice which can check for a strong and weak password
 
