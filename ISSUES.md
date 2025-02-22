@@ -30,3 +30,10 @@ As a standard practice, the response must be returned with an apt status code, f
 ## Incorrect status code for "Invalid Token" in authenticateToken middleware
 Description:
 The status code mentioned for invalid token is 403 signifying forbidden or lack of permission. 401 unauthorized indicates authentication failure.
+
+## Potential error with splitting Authorization Header
+if authHeader is malformed, 
+```js
+authHeader.split(' ')[1]
+```
+may return undefined which can cause runtime errors.
