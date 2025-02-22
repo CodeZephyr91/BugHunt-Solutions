@@ -153,7 +153,7 @@ app.delete('/tasks/:id', authenticateToken, (req, res) => {
         return res.status(404).json({ message: 'Task not found' });
     }
     tasks.splice(taskIndex, 1);
-    res.status(204).send();
+    res.status(204).json({message:"Deletion successfull for the task"});
 });
 app.get('/',(req,res)=>{
     console.log(`Connected to the API`)

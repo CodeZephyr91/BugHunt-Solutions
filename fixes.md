@@ -1,11 +1,11 @@
-## Missing Root Route issue fixed:
+## 1.Missing Root Route issue fixed:
 ```js
 app.get('/',(req,res)=>{
     console.log(`Connected to the API`)
     res.send("Connection to API successful")
 })
 ```
-## Hardcoded JWT Secret Key and PORT
+## 2.Hardcoded JWT Secret Key and PORT
 
 ```bash
 npm install dotenv
@@ -24,7 +24,7 @@ Include .env in .gitignore
 ```bash
 echo ".env" >> .gitignore
 ```
-## Storing plain text password in '/register' route
+## 3.Storing plain text password in '/register' route
 Updated code:
 ```bash
 npm install bcrypt
@@ -58,7 +58,7 @@ app.post('/register', async (req, res) => {
 });
 ```
 
-## Storing plain text password in '/login' route
+## 4.Storing plain text password in '/login' route
 Updated code:
 ```bash
 npm install bcrypt
@@ -85,20 +85,20 @@ app.post('/login', async (req, res) => {
     }
 });
 ```
-## Incorrect status code for "User not found" in '/login' route
+## 5.Incorrect status code for "User not found" in '/login' route
 Appropriate fix for status code 404:
  ```js
  if (!user) {
             return res.status(404).json({ message: 'User not found' });
         }
 ```
-## Redundant and unecessary async in '/login' route
+## 6.Redundant and unecessary async in '/login' route
 After removing async:
 ```js
 app.post('/login',(req,res)=>{
 })
 ```
-##  Missing res.status(200) in successful login response
+## 7. Missing res.status(200) in successful login response
 Explicitly set res.status(200) before returning a successful response.
 ```js
  res.status(200).json({
@@ -112,7 +112,7 @@ Explicitly set res.status(200) before returning a successful response.
         });
 ```
 
-## Optimization via chaining for authHeader splitting in authentication middleware
+## 8.Optimization via chaining for authHeader splitting in authentication middleware
 ```js
 const token = authHeader && authHeader.split(' ')[1];
 ```
@@ -187,7 +187,7 @@ app.put('/tasks/:id', authenticateToken, (req, res) => {
     res.json(task);
 });
 ```
-## 13. Valid id check missing in the delete request route for '/tasks/:id'
+## 13.Valid id check missing in the delete request route for '/tasks/:id'
  In case the id is invalid or NaN it cannot be parsed into an integer
 Updated code:
 ```js
@@ -202,5 +202,21 @@ app.delete('/tasks/:id', authenticateToken, (req, res) => {
     }
     tasks.splice(taskIndex, 1);
     res.status(204).send();
+});
+```
+## 14.In the delete request for route "/tasks/:id", an empty response is sent in place of a JSON response
+Updated code:
+```js
+app.delete('/tasks/:id', authenticateToken, (req, res) => {
+    const { id } = req.params;
+    if(isNaN(id)|| parseInt(id)<=0){
+        return res.status(400).json({message:"Invalid ID for task"})
+    }
+    const taskIndex = tasks.findIndex(task => task.id === parseInt(id) && task.userId === req.user.id);
+    if (taskIndex === -1) {
+        return res.status(404).json({ message: 'Task not found' });
+    }
+    tasks.splice(taskIndex, 1);
+    res.status(204).json({message:"Deletion successfull for the task"});
 });
 ```
