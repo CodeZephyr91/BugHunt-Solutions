@@ -198,6 +198,8 @@ const handleRegister = async (e) => {
 const handleLogout = (e) => {
     e.preventDefault();
     removeToken();
+    localStorage.removeItem('user_email');
+    localStorage.removeItem('user_password');
     showAuth();
 };
 
