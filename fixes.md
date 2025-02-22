@@ -101,3 +101,13 @@ app.get('/tasks', authenticateToken, (req, res) => {
     res.json(userTasks);
 });
 ```
+## 11. Explicit status for successful response in '/tasks' route
+Fixed code:
+```js
+app.get('/tasks', authenticateToken, (req, res) => {
+    const userTasks = tasks.filter(task => task.userId === req.user.id);
+    if(userTasks.length === 0){
+        return res.status(404).json({message:"No valid tasks assigned to the user"});
+    }
+    res.status(200).json(userTasks);
+});

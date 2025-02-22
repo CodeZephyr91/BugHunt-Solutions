@@ -42,3 +42,7 @@ If a valid title is not there in the req body, then a status of 400 must be retu
 
 ## 10. Check for missing Tasks for a given user in '/tasks' route
 In case usertasks for a given user is empty an appropraite response error message along with status 404 must be returned
+
+## 11. Explicit status for successful response in '/tasks' route
+Explicit status of 200 OK must be sent for successful response
+

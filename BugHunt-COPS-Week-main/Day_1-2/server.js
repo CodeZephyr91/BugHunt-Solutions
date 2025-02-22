@@ -142,7 +142,7 @@ app.get('/tasks', authenticateToken, (req, res) => {
     if(userTasks.length === 0){
         return res.status(404).json({message:"No valid tasks assigned to the user"});
     }
-    res.json(userTasks);
+    res.status(200).json(userTasks);
 });
 
 app.put('/tasks/:id', authenticateToken, (req, res) => {
