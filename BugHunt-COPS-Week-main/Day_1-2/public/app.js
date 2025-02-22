@@ -242,11 +242,12 @@ const handleTaskSubmit = async (e) => {
 };
 
 const handleTaskToggle = async (id, completed) => {
-    updateTaskInUI(id, { completed });
     try {
         await api.updateTask(id, { completed });
+        updateTaskInUI(id, { completed });
     } catch (error) {
         console.error(error.message);
+        alert("Failed to update task status.");
     }
 };
 

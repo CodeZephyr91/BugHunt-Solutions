@@ -46,6 +46,20 @@ Resetting error message before setting new one:
 elements.loginError.textContent = '';
 elements.loginError.textContent = error.message;
 ```
+## 6.Incorrect task updation in handleTaskToggle as API call may fail
+UI must be updated only if the API call succeeds
+```js
+const handleTaskToggle = async (id, completed) => {
+    try {
+        await api.updateTask(id, { completed });
+        updateTaskInUI(id, { completed });
+    } catch (error) {
+        console.error(error.message);
+        alert("Failed to update task status.");
+    }
+};
+```
+
 
 
 
