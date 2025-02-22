@@ -1,4 +1,4 @@
-const API_URL = 'http://localhost:3000'
+const API_URL = CONFIG.API_URL;
 const TOKEN_KEY = 'auth_token';
 
 const setToken = (token) => localStorage.setItem(TOKEN_KEY, token);
