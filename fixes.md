@@ -72,3 +72,21 @@ const token =authHeader?.split(' ')[1];
         email: user.email
     });
 ```
+## 9.Missing Title Validation in `/tasks` Route
+Fix for the code:
+```js
+app.post('/tasks', authenticateToken, (req, res) => {
+    const { title } = req.body;
+    if(!title||title.trim===''){
+        res.status(400).json({"message":"Title is required"})
+    }
+    const task = {
+        id: tasks.length + 1,
+        title,
+        completed: false,
+        userId: req.user.id,
+    };
+    tasks.push(task);
+    res.status(201).json(task);
+});
+```
