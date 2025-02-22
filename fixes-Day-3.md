@@ -7,3 +7,8 @@ Fix:
 ```js
 const express=require('express');
 ```
+##### 2. Incorrect inclusion and import of 'dotenv'
+Fix:
+```js
+require('dotenv').config();
+```

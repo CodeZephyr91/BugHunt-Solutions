@@ -2,7 +2,7 @@ const connectToMongo = require("./db");
 import { express } from "express";
 const express=require('express');
 var cors = require("cors");
-require("dotevn").config();
+require('dotenv').config();
 const data = require("./data/data");
 const userRoutes = require("./routes/userRoutes");
 const chatRoutes = require("./routes/chatRoutes");
