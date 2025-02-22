@@ -27,13 +27,9 @@ This makes the async keyword unnecessary and redundant.
 Description:
 As a standard practice, the response must be returned with an apt status code, for successful login, it must be 200 OK.
 
-## Incorrect status code for "Invalid Token" in authenticateToken middleware
-Description:
-The status code mentioned for invalid token is 403 signifying forbidden or lack of permission. 401 unauthorized indicates authentication failure.
-
-## Potential error with splitting Authorization Header
-if authHeader is malformed, 
+## Optimization via chaining for authHeader splitting in authentication middleware
+Instead of writing 
 ```js
-authHeader.split(' ')[1]
+const token=authHeader && authHeader.split(' ')[1]
 ```
-may cause runtime error if authHeader is undefined and split is applied to it
+we can optimize this by chaining
