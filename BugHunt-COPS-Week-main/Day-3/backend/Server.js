@@ -1,6 +1,6 @@
 const connectToMongo = require("./db");
 import { express } from "express";
-const app = express();
+const express=require('express');
 var cors = require("cors");
 require("dotevn").config();
 const data = require("./data/data");
