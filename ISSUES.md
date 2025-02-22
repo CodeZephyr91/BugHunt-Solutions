@@ -33,3 +33,6 @@ Instead of writing
 const token=authHeader && authHeader.split(' ')[1]
 ```
 we can optimize this by chaining
+
+##  Missing Explicit Status Code in '/user' Route
+As per standard practice, for successful response, status 200 OK ought to be sent
