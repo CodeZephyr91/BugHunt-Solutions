@@ -204,19 +204,3 @@ app.delete('/tasks/:id', authenticateToken, (req, res) => {
     res.status(204).send();
 });
 ```
-## 14.In the delete request for route "/tasks/:id", an empty response is sent in place of a JSON response
-Updated code:
-```js
-app.delete('/tasks/:id', authenticateToken, (req, res) => {
-    const { id } = req.params;
-    if(isNaN(id)|| parseInt(id)<=0){
-        return res.status(400).json({message:"Invalid ID for task"})
-    }
-    const taskIndex = tasks.findIndex(task => task.id === parseInt(id) && task.userId === req.user.id);
-    if (taskIndex === -1) {
-        return res.status(404).json({ message: 'Task not found' });
-    }
-    tasks.splice(taskIndex, 1);
-    res.status(204).json({message:"Deletion successfull for the task"});
-});
-```

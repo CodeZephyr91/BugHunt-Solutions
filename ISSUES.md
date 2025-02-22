@@ -46,5 +46,3 @@ In case the taskID is not valid or is NaN it cannot be parsed to an integer.It m
 
 ## 13. Valid id check missing in the delete request route for '/tasks/:id' 
 In case the taskID is not valid or is NaN it cannot be parsed into an integer. It may also be parsed to a value invalid for being an apt task ID.
-
-## 14. In the delete request for route "/tasks/:id", an empty response is sent in place of a JSON response
