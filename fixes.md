@@ -204,3 +204,33 @@ app.delete('/tasks/:id', authenticateToken, (req, res) => {
     res.status(204).send();
 });
 ```
+## 14. MongoDB connection not implemented
+### Set up MongoDB connection:
+- Install MongoDB and create a database
+- Use MongoDB atlas or use local MongoDB instance(using MongoDB Compass) (Cloud instance like Atlas is a better choice)
+- Store the MongoDB connection string in the .env file
+### Modify server.js to setup MongoDB
+```js
+const mongoose=require('mongoose');
+const mongo_uri=process.env.mongo_uri;
+mongoose.connect(mongo_uri).then(()=>console.log("Connected to MongoDB"))
+.catch((err)=>console.error("MongoDB connection err: ",err));
+```
+### Define Mongoose schema for users and tasks
+```js
+const userSchema = new mongoose.Schema({
+    name: String,
+    email: { type: String, unique: true },
+    password: String
+});
+
+const taskSchema = new mongoose.Schema({
+    title: String,
+    completed: Boolean,
+    userId: mongoose.Schema.Types.ObjectId
+});
+
+const User = mongoose.model('User', userSchema);
+const Task = mongoose.model('Task', taskSchema);
+```
+### Modify the authentication and task routes to use MongoDB
