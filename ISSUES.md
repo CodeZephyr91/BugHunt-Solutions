@@ -22,3 +22,7 @@ Description:
 Description:
 The app.post('/login', async (req, res) => {...}) function is marked as async, but no asynchronous operations (such as await) are used inside it.
 This makes the async keyword unnecessary and redundant.
+
+##  Missing res.status(200) in successful login response
+Description:
+As a standard practice, the response must be returned with an apt status code, for successful login, it must be 200 OK.
