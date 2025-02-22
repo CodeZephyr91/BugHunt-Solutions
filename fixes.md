@@ -131,3 +131,20 @@ app.put('/tasks/:id', authenticateToken, (req, res) => {
     res.json(task);
 });
 ```
+## 13. Valid id check missing in the delete request route for '/tasks/:id'
+ In case the id is invalid or NaN it cannot be parsed into an integer
+Updated code:
+```js
+app.delete('/tasks/:id', authenticateToken, (req, res) => {
+    const { id } = req.params;
+    if(isNaN(id)|| parseInt(id)<=0){
+        return res.status(400).json({message:"Invalid ID for task"})
+    }
+    const taskIndex = tasks.findIndex(task => task.id === parseInt(id) && task.userId === req.user.id);
+    if (taskIndex === -1) {
+        return res.status(404).json({ message: 'Task not found' });
+    }
+    tasks.splice(taskIndex, 1);
+    res.status(204).send();
+});
+```
