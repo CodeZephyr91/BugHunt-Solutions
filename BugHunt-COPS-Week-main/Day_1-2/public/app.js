@@ -15,8 +15,8 @@ const api = {
                 },
                 body: JSON.stringify(userData),
             });
-            const data = await response.json();
             if (!response.ok) throw new Error(data.message);
+            const data = await response.json();
             return data;
         } catch (error) {
             throw new Error(error.message);
@@ -32,8 +32,8 @@ const api = {
                 },
                 body: JSON.stringify(credentials),
             });
-            const data = await response.json();
             if (!response.ok) throw new Error(data.message);
+            const data = await response.json();
             return data;
         } catch (error) {
             throw new Error(error.message);
@@ -47,8 +47,8 @@ const api = {
                     'Authorization': `Bearer ${getToken()}`,
                 },
             });
-            const data = await response.json();
             if (!response.ok) throw new Error(data.message);
+            const data = await response.json();
             return data;
         } catch (error) {
             throw new Error(error.message);
@@ -62,8 +62,8 @@ const api = {
                     'Authorization': `Bearer ${getToken()}`,
                 },
             });
-            const data = await response.json();
             if (!response.ok) throw new Error(data.message);
+            const data = await response.json();
             return data;
         } catch (error) {
             throw new Error(error.message);
@@ -77,8 +77,8 @@ const api = {
                     'Authorization': `Bearer ${getToken()}`,
                 },
             });
-            const data = await response.json();
             if (!response.ok) throw new Error(data.message);
+            const data = await response.json();
             return data;
         } catch (error) {
             throw new Error(error.message);
@@ -95,8 +95,8 @@ const api = {
                 },
                 body: JSON.stringify({ title }),
             });
-            const data = await response.json();
             if (!response.ok) throw new Error(data.message);
+            const data = await response.json();
             return data;
         } catch (error) {
             throw new Error(error.message);
@@ -113,8 +113,8 @@ const api = {
                 },
                 body: JSON.stringify(updates),
             });
-            const data = await response.json();
             if (!response.ok) throw new Error(data.message);
+            const data = await response.json();
             return data;
         } catch (error) {
             throw new Error(error.message);
