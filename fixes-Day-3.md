@@ -228,4 +228,10 @@ phoneNo: {
   type: String,
 },
 ```
-
+##### 2.Incorrect DOB Type
+DOB is defined as a String, but it represents a date
+```js
+dob: {
+  type: Date,
+},
+```

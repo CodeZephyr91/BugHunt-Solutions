@@ -3,16 +3,16 @@ const { Schema } = mongoose;
 
 const userModel = new Schema(
   {
-    Name: {
+    name: {
       type: String,
       required: true,
     },
-    Email: {
+    email: {
       type: String,
       required: true,
       unique: true,
     },
-    Password: {
+    password: {
       type: String,
       required: true,
     },
@@ -21,14 +21,14 @@ const userModel = new Schema(
       default:
         "https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg",
     },
-    Description: {
+    description: {
       type: String,
     },
-    PhoneNo: {
-      type: Number,
-    },
-    DOB: {
+    phoneNo: {
       type: String,
+    },
+    dob: { 
+      type: Date,
     },
   },
   { timestamps: true }
