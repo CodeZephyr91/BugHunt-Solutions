@@ -7,7 +7,7 @@ require('dotenv').config();
 const JWT_SECRET =process.env.JWT_SECRET;
 const cloudinary = require("../Cloudinary");
 
-router.get("/", async (req, res) => {
+router.post("/", async (req, res) => {
   let success = false;
   try {
     const { pic } = req.body;
@@ -41,9 +41,9 @@ router.get("/", async (req, res) => {
       },
     };
     console.log(data);
-    const auhToken = jwt.sign(data, JWT_SECRET);
+    const authToken = jwt.sign(data, JWT_SECRET);
     success = true;
-    res.json({ success, auhToken, user });
+    res.json({ success, authToken, user });
   } catch (error) {
     console.error(error.message);
     res.status(500).send("Some error occured");

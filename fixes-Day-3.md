@@ -53,6 +53,56 @@ Inside the .env file:
 
 JWT_SECRET=Flutio@5665#
 
+##### 3.Using a GET request for registration on the route "/"
+The first route (router.get("/")) is trying to register a new user, but user registration should be a POST request instead of GET
+
+GET is meant for fetching data, not creating new entries
+Fix in the code:
+```js
+router.post("/", async (req, res) => {
+  let success = false;
+  try {
+    const { pic } = req.body;
+    let user = await User.findOne({ email: req.body.email });
+    if (user) {
+      return res
+        .status(400)
+        .json({ error: "sorry user with this email already exists" });
+    }
+    console.log(req.body.password);
+
+    let Url;
+    if (pic) {
+      const result = await cloudinary.uploader.upload(pic, {
+        folder: "UsersImage",
+      });
+      Url = result.url;
+      console.log(result);
+    }
+
+    user = await User.create({
+      name: req.body.name,
+      password: req.body.password,
+      email: req.body.email,
+      pic: Url,
+    });
+
+    const data = {
+      user: {
+        id: user._id,
+      },
+    };
+    console.log(data);
+    const authToken = jwt.sign(data, JWT_SECRET);
+    success = true;
+    res.json({ success, authToken, user });
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).send("Some error occured");
+  }
+});
+```
+
 #### chatRoutes.js:
 ##### 1.Multiple router.route("/") calls without chaining
 Fix:
