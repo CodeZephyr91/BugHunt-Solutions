@@ -219,3 +219,13 @@ Chat: {
   required: true,
 },
 ```
+#### -User.js
+##### 1.Incorrect PhoneNo Type
+PhoneNo is defined as a Number which does not support leading zeros
+Fix:
+```js
+phoneNo: {
+  type: String,
+},
+```
+
