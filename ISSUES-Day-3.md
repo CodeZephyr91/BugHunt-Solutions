@@ -36,6 +36,12 @@ const auhToken = jwt.sign(data, JWT_SECRET);
 ##### 2.Hardcoded JWT_SECRET
 JWT_SECRET has been hardcoded into the code instead of being stored in a dotenv file and then being loaded dynamically
 
+##### 3.Using a GET request for registration on the route "/"
+The first route (router.get("/")) is trying to register a new user, but user registration should be a POST request instead of GET
+
+
+GET is meant for fetching data, not creating new entries
+
 #### chatRoutes.js:
 ##### 1.Multiple router.route("/") calls without chaining
 Defining the route again and again for different methods of request is redundant and unncecessary
