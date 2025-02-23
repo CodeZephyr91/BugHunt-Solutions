@@ -11,11 +11,10 @@ const {
 } = require("../controllers/chatControllers");
 
 const router = express.Router();
-
 router.route("/")
   .post(protect, accessChat)
-  .get(protect, fetchChat)
-  .delete(protect, DeleteChat);
+  .get(protect, fetchChat); 
+router.route("/:chatId").delete(protect, DeleteChat);
 router.route("/group").post(protect, createGroupChat);
 router.route("/rename").put(protect, renameGroup);
 router.route("/groupremove").put(protect, removeFromGroup);
