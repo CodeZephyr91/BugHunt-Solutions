@@ -58,6 +58,8 @@ The DeleteChat route does not have protect
 
 This means anyone can delete a chat without authentication, which is a security risk
 
+##### 3.Alignment with the changed mongoDB schema
+
 #### - authMiddleware.js
 
 ##### 1. Plain text in error message instead of a JSON
