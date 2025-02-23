@@ -26,4 +26,8 @@ const io = require("socket.io")(server, {
 ```
 Its better to remove this unused import to make the code cleaner.
 
+#### chatRoutes.js:
+##### 1.Multiple router.route("/") calls without chaining
+Defining the route again and again for different methods of request is redundant and unncecessary
+
 
