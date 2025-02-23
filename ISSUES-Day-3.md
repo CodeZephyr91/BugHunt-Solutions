@@ -14,3 +14,16 @@ Using const is the recommended approach because cors does not need to be reassig
 ##### 4.app not declared in the code
 Using app.use(express.json()); before defining app
 
+##### 5. Socket class is unextended and remains unused
+Socket is imported but never used.It does not initialize the web Socket server but a WebSocket instance is created in a separate line
+```js
+const io = require("socket.io")(server, {
+  pingTimeout: 60000,
+  cors: {
+    origin: "https://chat-buddy-hgxs6aqne-vivek-mauryas-projects.vercel.app",
+  },
+});
+```
+Its better to remove this unused import to make the code cleaner.
+
+

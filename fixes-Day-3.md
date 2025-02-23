@@ -20,5 +20,13 @@ const cors=require('cors');
 ##### 4.app not declared in the code
 Fix:
 ```js
+
 const app=express();
 ```
+##### 5. Socket class is unextended and remains unused
+Fix:
+Removing this line from the code:
+```js
+const { Socket } = require("socket.io");
+```
+

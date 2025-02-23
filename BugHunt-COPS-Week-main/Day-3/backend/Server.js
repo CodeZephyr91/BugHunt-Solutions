@@ -6,7 +6,6 @@ const data = require("./data/data");
 const userRoutes = require("./routes/userRoutes");
 const chatRoutes = require("./routes/chatRoutes");
 const messageRoutes = require("./routes/messageRoutes");
-const { Socket } = require("socket.io");
 const app=express();
 const PORT = process.env.PORT;
 app.use(express.json());
