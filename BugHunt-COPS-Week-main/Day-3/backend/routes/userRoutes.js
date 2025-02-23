@@ -1,87 +1,62 @@
 const express = require("express");
 const router = express.Router();
 const User = require("../Models/User");
-var jwt = require("jsonwebtoken");
+const jwt = require("jsonwebtoken");
 const { allUsers, UpdateUser } = require("../controllers/userController");
-require('dotenv').config();
-const JWT_SECRET =process.env.JWT_SECRET;
+require("dotenv").config();
 const cloudinary = require("../Cloudinary");
 
+const JWT_SECRET = process.env.JWT_SECRET;
+
+// @route   POST /api/users
+// @desc    Register a new user
 router.post("/", async (req, res) => {
-  let success = false;
   try {
-    const { pic } = req.body;
-    let user = await User.findOne({ email: req.body.email });
+    const { name, email, password, pic, role, preferences } = req.body; 
+    let user = await User.findOne({ email });
     if (user) {
-      return res
-        .status(400)
-        .json({ error: "sorry user with this email already exists" });
+      return res.status(400).json({ error: "User with this email already exists" });
     }
-    console.log(req.body.password);
-
-    let Url;
+    let Url = "";
     if (pic) {
-      const result = await cloudinary.uploader.upload(pic, {
-        folder: "UsersImage",
-      });
-      Url = result.url;
-      console.log(result);
-    }
-
+      const result = await cloudinary.uploader.upload(pic, { folder: "UsersImage" });
+      Url = result.secure_url;
+    }a
     user = await User.create({
-      name: req.body.name,
-      password: req.body.password,
-      email: req.body.email,
+      name,
+      email,
+      password,
       pic: Url,
+      role,        
+      preferences,  
     });
+    const authToken = jwt.sign({ id: user._id }, JWT_SECRET, { expiresIn: "7d" });
 
-    const data = {
-      user: {
-        id: user._id,
-      },
-    };
-    console.log(data);
-    const authToken = jwt.sign(data, JWT_SECRET);
-    success = true;
-    res.json({ success, authToken, user });
+    res.status(201).json({ success: true, authToken, user });
   } catch (error) {
-    console.error(error.message);
-    res.status(500).send("Some error occured");
+    console.error("Error in registration:", error.message);
+    res.status(500).json({ error: "Internal Server Error" });
   }
 });
 
+// @route   POST /api/users/login
+// @desc    Authenticate user & get token
 router.post("/login", async (req, res) => {
-  let success = false;
   const { email, password } = req.body;
   try {
     let user = await User.findOne({ email });
-    if (!user) {
-      return res
-        .status(400)
-        .json({ error: "plase try to login with correct credentials" });
+    if (!user || user.password !== password) {
+      return res.status(400).json({ error: "Invalid email or password" });
     }
-    if (password != user.password) {
-      success = false;
-      return res
-        .status(400)
-        .json({ success, error: "plase try to login with correct password" });
-    }
-    const data = {
-      user: {
-        id: user.id,
-      },
-    };
-    const authToken =jwt.sign(data,JWT_SECRET);
-    success = true;
-    res.json({ success, authToken, user });
+    const authToken = jwt.sign({ id: user._id }, JWT_SECRET, { expiresIn: "7d" });
+
+    res.json({ success: true, authToken, user });
   } catch (error) {
-    console.error(error.message);
-    res.status(500).send("internal server error");
+    console.error("Error in login:", error.message);
+    res.status(500).json({ error: "Internal Server Error" });
   }
 });
-
 router.route("/").get(allUsers);
-
 router.route("/update").put(UpdateUser);
 
 module.exports = router;
