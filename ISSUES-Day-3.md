@@ -105,3 +105,8 @@ DOB is defined as a String, but it represents a date
 
 #### -data.js
 ##### 1. Based on the schema changes, users and groupAdmin need to store MongoDB ObjectIds
+
+#### -userController.js
+##### 1.Alignment of userController.js with respect to the updated schema
+##### 2.Handling Image upload properly
+##### 3.Error handling for user not found
