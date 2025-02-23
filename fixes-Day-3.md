@@ -158,3 +158,22 @@ Fix:
 ```js
 delete(protect, DeleteChat);
 ```
+
+##### 1. Plain text in error message instead of a JSON
+The response sends plain text "Not Authorised ,no token", instead of a json
+```js
+res.status(401).json({message:"Not Authorised ,no token"});
+```
+##### 2.Duplicate Unauthorized Response
+```js
+ try {
+        token =req.headers.authorization.split(' ')[1];
+        const decoded =jwt.verify(token,JWT_SECRET);
+
+        req.user =await User.findById(decoded.user.id).select('-password');
+            
+        next();
+        } catch (error) {
+            res.status(401).json({message:"Not Authorised ,no token"});
+        }
+```

@@ -65,3 +65,12 @@ The response sends plain text "Not Authorised ,no token", instead of a json
 ```js
 res.status(401).json({message:"Not Authorised ,no token"});
 ```
+##### 2.Duplicate Unauthorized Response
+If token is missing or invalid, the middleware sends two different 401 responses:
+- Inside catch block: res.status(401).json('Not Authorised ,no token');
+- Outside try-catch block: res.status(401).json('Not authorised ,no token');
+
+##### 3. Hardcoded JWT_SECRET:
+JWT_SECRET has been hardcoded into the code instead of being stored in a dotenv file and then being loaded dynamically
+
+
