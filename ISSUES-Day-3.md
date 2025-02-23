@@ -48,6 +48,7 @@ In the login route (router.get("/login")), req.body is used to get email and pas
 
 However, GET requests do not have a request body in HTTP standards
 
+
 #### chatRoutes.js:
 ##### 1.Multiple router.route("/") calls without chaining
 Defining the route again and again for different methods of request is redundant and unncecessary
@@ -57,4 +58,10 @@ The DeleteChat route does not have protect
 
 This means anyone can delete a chat without authentication, which is a security risk
 
+#### authMiddleware.js
 
+##### 1. Plain text in error message instead of a JSON
+The response sends plain text "Not Authorised ,no token", instead of a json
+```js
+res.status(401).json({message:"Not Authorised ,no token"});
+```
