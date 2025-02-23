@@ -42,6 +42,12 @@ The first route (router.get("/")) is trying to register a new user, but user reg
 
 GET is meant for fetching data, not creating new entries
 
+##### 4.In the login route, "/login" a GET request has been used and req.body is being accessed, but as per HTTP standards GET requests don't have a body
+
+In the login route (router.get("/login")), req.body is used to get email and password
+
+However, GET requests do not have a request body in HTTP standards
+
 #### chatRoutes.js:
 ##### 1.Multiple router.route("/") calls without chaining
 Defining the route again and again for different methods of request is redundant and unncecessary
