@@ -50,7 +50,7 @@ router.post("/", async (req, res) => {
   }
 });
 
-router.get("/login", async (req, res) => {
+router.post("/login", async (req, res) => {
   let success = false;
   const { email, password } = req.body;
   try {

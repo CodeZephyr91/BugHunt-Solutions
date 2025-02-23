@@ -102,6 +102,44 @@ router.post("/", async (req, res) => {
   }
 });
 ```
+##### 4.In the login route, "/login" a GET request has been used and req.body is being accessed, but as per HTTP standards GET requests don't have a body
+
+In the login route (router.get("/login")), req.body is used to get email and password
+
+However, GET requests do not have a request body in HTTP standards
+
+Fix in the code:
+```js
+router.post("/login", async (req, res) => {
+  let success = false;
+  const { email, password } = req.body;
+  try {
+    let user = await User.findOne({ email });
+    if (!user) {
+      return res
+        .status(400)
+        .json({ error: "plase try to login with correct credentials" });
+    }
+    if (password != user.password) {
+      success = false;
+      return res
+        .status(400)
+        .json({ success, error: "plase try to login with correct password" });
+    }
+    const data = {
+      user: {
+        id: user.id,
+      },
+    };
+    const authToken =jwt.sign(data,JWT_SECRET);
+    success = true;
+    res.json({ success, authToken, user });
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).send("internal server error");
+  }
+});
+```
 
 #### chatRoutes.js:
 ##### 1.Multiple router.route("/") calls without chaining
