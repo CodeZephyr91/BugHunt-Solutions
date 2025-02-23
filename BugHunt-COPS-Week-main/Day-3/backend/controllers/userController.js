@@ -16,42 +16,35 @@ const allUsers = asyncHandler(async (req, res) => {
     : {};
 
   const users = await User.find(keyword);
-  res.send(users);
+  res.json(users);
 });
 
-//@description     update user details
+//@description     Update user details
 //@route           PUT /api/user/update
-//@access          only user
+//@access          Only user
 const UpdateUser = asyncHandler(async (req, res) => {
-  const { name, email, Description, PhoneNo, pic, DOB } = req.body;
+  const { name, email, description, phoneNo, pic, dob } = req.body;
 
-  let Url;
+  let updateFields = { name, email, description, phoneNo, dob };
+
   if (pic) {
-    const result = await cloudinary.uploader.upload(pic, {
-      folder: "UsersImage",
-    });
-    Url = result.url;
-    console.log(result);
+    try {
+      const result = await cloudinary.uploader.upload(pic, {
+        folder: "UsersImage",
+      });
+      updateFields.pic = result.url;
+    } catch (error) {
+      return res.status(500).json({ error: "Image upload failed" });
+    }
   }
 
-  let user = await User.findByIdAndUpdate(
-    req.user._id,
-    {
-      $set: {
-        name: name,
-        email: email,
-        Description: Description,
-        PhoneNo: PhoneNo,
-        DOB: DOB,
-        pic: Url,
-      },
-    },
-    { new: true }
-  );
+  const user = await User.findByIdAndUpdate(req.user._id, { $set: updateFields }, { new: true });
+
   if (!user) {
-    return "User not found";
-  } else {
-    res.json(user);
+    return res.status(404).json({ error: "User not found" });
   }
+
+  res.json(user);
 });
+
 module.exports = { allUsers, UpdateUser };
