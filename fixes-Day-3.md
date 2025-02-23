@@ -29,6 +29,17 @@ Removing this line from the code:
 ```js
 const { Socket } = require("socket.io");
 ```
+#### userRoutes.js:
+##### 1. Typo in authToken:
+authToken mentioned as auhtoken in:
+```js
+const auhToken = jwt.sign(data, JWT_SECRET);
+```
+Fix:
+```js
+const authToken =jwt.sign(data,JWT_SECRET);
+```
+
 #### chatRoutes.js:
 ##### 1.Multiple router.route("/") calls without chaining
 Fix:

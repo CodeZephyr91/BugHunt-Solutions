@@ -26,6 +26,13 @@ const io = require("socket.io")(server, {
 ```
 Its better to remove this unused import to make the code cleaner.
 
+#### userRoutes.js:
+##### 1. Typo in authToken:
+authToken mentioned as auhtoken in:
+```js
+const auhToken = jwt.sign(data, JWT_SECRET);
+```
+
 #### chatRoutes.js:
 ##### 1.Multiple router.route("/") calls without chaining
 Defining the route again and again for different methods of request is redundant and unncecessary
