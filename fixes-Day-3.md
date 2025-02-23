@@ -29,4 +29,20 @@ Removing this line from the code:
 ```js
 const { Socket } = require("socket.io");
 ```
+#### chatRoutes.js:
+##### 1.Multiple router.route("/") calls without chaining
+Fix:
+```js
+router.route("/")
+  .post(protect, accessChat)
+  .get(protect, fetchChat)
+  .delete(protect, DeleteChat);
+```
+##### 2.Missing protect middleWare from deletion of chat
+The DeleteChat route does not have protect
 
+This means anyone can delete a chat without authentication, which is a security risk
+Fix:
+```js
+delete(protect, DeleteChat);
+```

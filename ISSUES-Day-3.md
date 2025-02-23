@@ -30,4 +30,9 @@ Its better to remove this unused import to make the code cleaner.
 ##### 1.Multiple router.route("/") calls without chaining
 Defining the route again and again for different methods of request is redundant and unncecessary
 
+##### 2.Missing protect middleWare from deletion of chat
+The DeleteChat route does not have protect
+
+This means anyone can delete a chat without authentication, which is a security risk
+
 
