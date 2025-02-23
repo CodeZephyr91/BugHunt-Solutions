@@ -7,15 +7,15 @@ const User = require("../Models/User");
 //@access          Protected
 const accessChat = asyncHandler(async (req, res) => {
   const { userId } = req.body;
-  console.log(req.user._id);
+  
   if (!userId) {
-    console.log("UserId params not send with request");
+    console.log("UserId parameter not sent with request");
     return res.sendStatus(400);
   }
 
   await new Promise(resolve => setTimeout(resolve, Math.random() * 1000));
 
-  var isChat = await Chat.find({
+  let isChat = await Chat.find({
     isGroupChat: false,
     $and: [
       { users: { $elemMatch: { $eq: req.user._id } } },
@@ -31,36 +31,32 @@ const accessChat = asyncHandler(async (req, res) => {
   });
 
   if (isChat.length > 0) {
-    res.send(isChat[0]);
+    res.json(isChat[0]);
   } else {
-    var chatData = {
+    const chatData = {
       chatName: "sender",
       isGroupChat: false,
       users: [req.user._id, userId],
     };
     
-    const createChat = await Chat.create(chatData);
-    const FullChat = await Chat.findOne({ _id: createChat._id }).populate(
-      "users",
-      "-password"
-    );
-    res.status(201).json(FullChat);
+    const createdChat = await Chat.create(chatData);
+    const fullChat = await Chat.findById(createdChat._id).populate("users", "-password");
+    res.status(201).json(fullChat);
   }
 });
 
-  
+// @description     Delete One to One or Group Chat
+// @route           DELETE /api/chat/
+// @access          Protected
+const deleteChat = asyncHandler(async (req, res) => {
+  const { chatId } = req.body;
 
-//for group only admins can do but for one to one any can do
-const DeleteChat = asyncHandler(async (req, res) => {
-  const { ChatId } = req.body;
-
-  const removed = await Chat.findByIdAndDelete({ _id: ChatId });
+  const removed = await Chat.findByIdAndDelete(chatId);
 
   if (!removed) {
-    res.status(404).json("Chat Not Found");
-  } else {
-    res.json(removed);
+    return res.status(404).json({ message: "Chat Not Found" });
   }
+  res.json(removed);
 });
 
 //@description     Fetch all chats for a user
@@ -68,21 +64,15 @@ const DeleteChat = asyncHandler(async (req, res) => {
 //@access          Protected
 const fetchChat = asyncHandler(async (req, res) => {
   try {
-    Chat.find({ users: { $elemMatch: { $eq: req.user._id } } })
+    const chats = await Chat.find({ users: { $elemMatch: { $eq: req.user._id } } })
       .populate("users", "-password")
       .populate("groupAdmin", "-password")
       .populate("latestMessage")
-      .sort({ updatedAt: -1 })
-      .then(async (results) => {
-        results = await User.populate(results, {
-          path: "latestMessage.sender",
-          select: "name pic email",
-        });
+      .sort({ updatedAt: -1 });
 
-        res.status(200).send(results);
-      });
+    res.status(200).json(chats);
   } catch (error) {
-    res.json(error.message);
+    res.status(500).json({ message: error.message });
   }
 });
 
@@ -90,108 +80,104 @@ const fetchChat = asyncHandler(async (req, res) => {
 //@route           POST /api/chat/group
 //@access          Protected
 const createGroupChat = asyncHandler(async (req, res) => {
-  if (!req.body.users || !req.body.name) {
-    return res.status(400).send({ message: "Please fill all the fields" });
+  const { users, name } = req.body;
+  
+  if (!users || !name) {
+    return res.status(400).json({ message: "Please fill all the fields" });
   }
 
-  var users = JSON.parse(req.body.users);
+  const parsedUsers = JSON.parse(users);
 
-  if (users.length < 2) {
-    return res
-      .status(400)
-      .send("More than 2 are required to form a group chat");
+  if (parsedUsers.length < 2) {
+    return res.status(400).json({ message: "At least 2 users are required to create a group chat" });
   }
-  users.push(req.user);
+
+  parsedUsers.push(req.user);
+
   try {
     const groupChat = await Chat.create({
-      chatName: req.body.name,
-      users: users,
+      chatName: name,
+      users: parsedUsers,
       isGroupChat: true,
       groupAdmin: req.user,
     });
 
-    const fullGroupChat = await Chat.findOne({ _id: groupChat._id })
+    const fullGroupChat = await Chat.findById(groupChat._id)
       .populate("users", "-password")
       .populate("groupAdmin", "-password");
 
-    res.status(200).json(fullGroupChat);
+    res.status(201).json(fullGroupChat);
   } catch (error) {
-    res.json(error.message);
+    res.status(500).json({ message: error.message });
   }
 });
 
-// @desc    Rename Group
-// @route   PUT /api/chat/rename
-// @access  Protected
+// @description    Rename Group
+// @route          PUT /api/chat/rename
+// @access         Protected
 const renameGroup = asyncHandler(async (req, res) => {
   const { chatId, chatName } = req.body;
 
   const updatedChat = await Chat.findByIdAndUpdate(
     chatId,
-    {
-      chatName,
-    },
-    {
-      new: true,
-    }
+    { chatName },
+    { new: true }
   )
     .populate("users", "-password")
     .populate("groupAdmin", "-password");
 
   if (!updatedChat) {
-    res.status(404), json("Chat Not Found");
-  } else {
-    res.json(updatedChat);
+    return res.status(404).json({ message: "Chat Not Found" });
   }
+  res.json(updatedChat);
 });
 
-//for group only
+// @description    Add user to Group
+// @route          PUT /api/chat/groupadd
+// @access         Protected
 const addToGroup = asyncHandler(async (req, res) => {
   const { chatId, userId } = req.body;
 
-  const added = await Chat.findByIdAndUpdate(
+  const updatedChat = await Chat.findByIdAndUpdate(
     chatId,
-    {
-      $push: { users: userId },
-    },
+    { $push: { users: userId } },
     { new: true }
   )
     .populate("users", "-password")
     .populate("groupAdmin", "-password");
 
-  if (!added) {
-    res.status(404), json("Chat Not Found");
-  } else {
-    res.json(added);
+  if (!updatedChat) {
+    return res.status(404).json({ message: "Chat Not Found" });
   }
+  res.json(updatedChat);
 });
 
-//for group only
+// @description    Remove user from Group
+// @route          PUT /api/chat/groupremove
+// @access         Protected
 const removeFromGroup = asyncHandler(async (req, res) => {
   const { chatId, userId } = req.body;
 
-  const removed = await Chat.findByIdAndUpdate(
+  const updatedChat = await Chat.findByIdAndUpdate(
     chatId,
-    {
-      $pull: { users: userId },
-    },
+    { $pull: { users: userId } },
     { new: true }
   )
     .populate("users", "-password")
     .populate("groupAdmin", "-password");
 
-  if (!removed) {
-    res.status(404), json("Chat Not Found");
-  } else {
-    res.json(removed);
+  if (!updatedChat) {
+    return res.status(404).json({ message: "Chat Not Found" });
   }
+  res.json(updatedChat);
 });
+
 module.exports = {
   accessChat,
   fetchChat,
   createGroupChat,
   renameGroup,
   addToGroup,
-  DeleteChat,
+  deleteChat,
   removeFromGroup,
 };

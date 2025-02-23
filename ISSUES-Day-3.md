@@ -114,3 +114,5 @@ DOB is defined as a String, but it represents a date
 #### -messageController.js
 ##### 1.Alignment of messageController.js with respect to the updated schema
 
+#### -chatController.js
+##### 1.Alignment of chatController.js with respect to the updated schema
