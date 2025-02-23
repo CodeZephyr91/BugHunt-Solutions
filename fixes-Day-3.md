@@ -178,7 +178,7 @@ res.status(401).json({message:"Not Authorised ,no token"});
         }
 ```
 
-#### - chatModel.js
+#### - ChatModel.js
 ##### 1.Incorrect type for users, latestMessage, and groupAdmin
 The users, latestMessage, and groupAdmin fields are incorrectly defined as type: string
 
@@ -199,4 +199,23 @@ The users field should store an array of ObjectIds, but it was mistakenly define
 Fix:
 ```js
 users: [{ type: Schema.Types.ObjectId, ref: "User" }],
+```
+#### - MessageModel.js
+##### 1. Incorrect Data Type for sender and Chat
+The sender and Chat fields are incorrectly defined as type: string
+
+These fields should reference other collections using Schema.Types.ObjectId
+Fix:
+Replace string with Schema.Types.ObjectId and setting proper references:
+```js
+sender: {
+  type: Schema.Types.ObjectId,
+  ref: "User",
+  required: true,
+},
+Chat: {
+  type: Schema.Types.ObjectId,
+  ref: "Chat",
+  required: true,
+},
 ```
