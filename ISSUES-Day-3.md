@@ -110,3 +110,7 @@ DOB is defined as a String, but it represents a date
 ##### 1.Alignment of userController.js with respect to the updated schema
 ##### 2.Handling Image upload properly
 ##### 3.Error handling for user not found
+
+#### -messageController.js
+##### 1.Alignment of messageController.js with respect to the updated schema
+
