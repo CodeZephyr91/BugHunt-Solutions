@@ -39,6 +39,19 @@ Fix:
 ```js
 const authToken =jwt.sign(data,JWT_SECRET);
 ```
+##### 2.Hardcoded JWT_SECRET
+JWT_SECRET has been hardcoded into the code instead of being stored in a dotenv file and then being loaded dynamically
+Fix:
+```bash
+npm install dotenv
+```
+```js
+require('dotenv').config();
+const JWT_SECRET=process.env.JWT_SECRET;
+```
+Inside the .env file:
+
+JWT_SECRET=Flutio@5665#
 
 #### chatRoutes.js:
 ##### 1.Multiple router.route("/") calls without chaining

@@ -3,7 +3,8 @@ const router = express.Router();
 const User = require("../Models/User");
 var jwt = require("jsonwebtoken");
 const { allUsers, UpdateUser } = require("../controllers/userController");
-const JWT_SECRET = "Flutio@5665#";
+require('dotenv').config();
+const JWT_SECRET =process.env.JWT_SECRET;
 const cloudinary = require("../Cloudinary");
 
 router.get("/", async (req, res) => {
@@ -70,9 +71,9 @@ router.get("/login", async (req, res) => {
         id: user.id,
       },
     };
-    const auhToken = jwt.sign(data, JWT_SECRET);
+    const authToken =jwt.sign(data,JWT_SECRET);
     success = true;
-    res.json({ success, auhToken, user });
+    res.json({ success, authToken, user });
   } catch (error) {
     console.error(error.message);
     res.status(500).send("internal server error");

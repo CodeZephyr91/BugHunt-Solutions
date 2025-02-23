@@ -33,6 +33,9 @@ authToken mentioned as auhtoken in:
 const auhToken = jwt.sign(data, JWT_SECRET);
 ```
 
+##### 2.Hardcoded JWT_SECRET
+JWT_SECRET has been hardcoded into the code instead of being stored in a dotenv file and then being loaded dynamically
+
 #### chatRoutes.js:
 ##### 1.Multiple router.route("/") calls without chaining
 Defining the route again and again for different methods of request is redundant and unncecessary
