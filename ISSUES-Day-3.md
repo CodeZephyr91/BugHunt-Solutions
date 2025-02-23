@@ -73,10 +73,26 @@ If token is missing or invalid, the middleware sends two different 401 responses
 ##### 3. Hardcoded JWT_SECRET:
 JWT_SECRET has been hardcoded into the code instead of being stored in a dotenv file and then being loaded dynamically
 
-#### - chatModel.js
+#### - ChatModel.js
 ##### 1.Incorrect type for users, latestMessage, and groupAdmin
 The users, latestMessage, and groupAdmin fields are incorrectly defined as type: string
 
 In Mongoose, references to other collections should use Schema.Types.ObjectId, not string
 ##### 2.users should be an array of ObjectIds
 users is meant to store multiple users but was mistakenly typed as an array of string values
+
+#### - MessageModel.js
+##### 1. Incorrect Data Type for sender and Chat
+The sender and Chat fields are incorrectly defined as type: string
+
+These fields should reference other collections using Schema.Types.ObjectId
+```js
+sender: {
+  type: string,
+  trim: true,
+},
+Chat: {
+  type: string,
+  ref: "Chat",
+},
+```
