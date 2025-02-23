@@ -102,3 +102,6 @@ PhoneNo is defined as a Number which does not support leading zeros
 
 ##### 2.Incorrect DOB Type
 DOB is defined as a String, but it represents a date
+
+#### -data.js
+##### 1. Based on the schema changes, users and groupAdmin need to store MongoDB ObjectIds
