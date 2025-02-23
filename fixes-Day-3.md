@@ -158,7 +158,33 @@ Fix:
 ```js
 delete(protect, DeleteChat);
 ```
+##### 3.Alignment with the changed mongoDB schema
+```js
+const express = require("express");
+const { protect } = require("../middleware/authMiddleware");
+const {
+  accessChat,
+  fetchChat,
+  DeleteChat,
+  createGroupChat,
+  renameGroup,
+  addToGroup,
+  removeFromGroup,
+} = require("../controllers/chatControllers");
 
+const router = express.Router();
+router.route("/")
+  .post(protect, accessChat)
+  .get(protect, fetchChat);
+router.route("/:chatId").delete(protect, DeleteChat);
+router.route("/group").post(protect, createGroupChat);
+router.route("/rename").put(protect, renameGroup);
+router.route("/groupremove").put(protect, removeFromGroup);
+router.route("/groupadd").put(protect, addToGroup);
+
+module.exports = router;
+
+```
 ##### 1. Plain text in error message instead of a JSON
 The response sends plain text "Not Authorised ,no token", instead of a json
 ```js
