@@ -26,7 +26,7 @@ const io = require("socket.io")(server, {
 ```
 Its better to remove this unused import to make the code cleaner.
 
-#### userRoutes.js:
+#### - userRoutes.js:
 ##### 1. Typo in authToken:
 authToken mentioned as auhtoken in:
 ```js
@@ -49,7 +49,7 @@ In the login route (router.get("/login")), req.body is used to get email and pas
 However, GET requests do not have a request body in HTTP standards
 
 
-#### chatRoutes.js:
+#### - chatRoutes.js:
 ##### 1.Multiple router.route("/") calls without chaining
 Defining the route again and again for different methods of request is redundant and unncecessary
 
@@ -58,7 +58,7 @@ The DeleteChat route does not have protect
 
 This means anyone can delete a chat without authentication, which is a security risk
 
-#### authMiddleware.js
+#### - authMiddleware.js
 
 ##### 1. Plain text in error message instead of a JSON
 The response sends plain text "Not Authorised ,no token", instead of a json
@@ -73,4 +73,10 @@ If token is missing or invalid, the middleware sends two different 401 responses
 ##### 3. Hardcoded JWT_SECRET:
 JWT_SECRET has been hardcoded into the code instead of being stored in a dotenv file and then being loaded dynamically
 
+#### - chatModel.js
+##### 1.Incorrect type for users, latestMessage, and groupAdmin
+The users, latestMessage, and groupAdmin fields are incorrectly defined as type: string
 
+In Mongoose, references to other collections should use Schema.Types.ObjectId, not string
+##### 2.users should be an array of ObjectIds
+users is meant to store multiple users but was mistakenly typed as an array of string values

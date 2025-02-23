@@ -177,3 +177,26 @@ res.status(401).json({message:"Not Authorised ,no token"});
             res.status(401).json({message:"Not Authorised ,no token"});
         }
 ```
+
+#### - chatModel.js
+##### 1.Incorrect type for users, latestMessage, and groupAdmin
+The users, latestMessage, and groupAdmin fields are incorrectly defined as type: string
+
+In Mongoose, references to other collections should use Schema.Types.ObjectId, not string
+Fix:
+Replace string with Schema.Types.ObjectId to correctly reference other collections.
+```js
+users: [{ type: Schema.Types.ObjectId, ref: "User" }],
+latestMessage: {
+  type: Schema.Types.ObjectId,
+  ref: "Message",
+},
+groupAdmin: { type: Schema.Types.ObjectId, ref: "User" },
+```
+##### 2.users should be an array of ObjectIds
+users is meant to store multiple users but was mistakenly typed as an array of string values
+The users field should store an array of ObjectIds, but it was mistakenly defined as an array of strings
+Fix:
+```js
+users: [{ type: Schema.Types.ObjectId, ref: "User" }],
+```
